@@ -99,13 +99,10 @@ javascript: (function(){
                     }                    
                 });                                    
             });                
-            var estFTot = 0, totCnt = 0;  
+            var totCnt = 0;  
             var estDetailArr = [];
             for(var key in cntByDay) {   
                 totCnt += cntByDay[key] || 0;
-                if(key.indexOf("f") == 0) {                        
-                    estFTot += cntByDay[key] || 0;                
-                } 
                 estDetailArr.push(key);                
             }
             var tgtEl = jQuery("#matchupweek .F-link[href='" + url + "']");
@@ -115,11 +112,9 @@ javascript: (function(){
             pointCont.parent().parent().css({'padding-bottom': '1px'});
             
             tgtEl.parent().next().remove();
-            tgtEl.parent().css({'max-width': '300px'});                
-            tgtEl.parent().find('.est-ftot').remove();  
+            tgtEl.parent().css({'max-width': '300px'});
             tgtEl.parent().find('.est-details').remove();  
-            jQuery("<span class=\"est-ftot\">(est. " + estFTot + ")</span>").appendTo(tgtEl.parent()); 
-            
+
             var detailCont = jQuery('<div style="font-size: 13px;" class="est-details" />');
             detailCont.appendTo(tgtEl.parent());
             
