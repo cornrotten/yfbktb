@@ -5,8 +5,6 @@ javascript: (function(){
     document.getElementsByTagName("head")[0].appendChild(jssrc);
     
     var hdl = {
-        MAX_ACT_PLAYERS_PER_DAY: 10,
-        
         leaveoutIrrelevants: function() {
             jQuery('.Rail .RailSub').parent().remove();    
             jQuery('.Rail .RailMain').css({width: '950px'});    
@@ -68,12 +66,15 @@ javascript: (function(){
                 titleMap["k"+curtIdx] = title;             
                 curtIdx++;                
             });                                
-            var cntByDay = {}, numOfAtts = 0, curtDayIdx = 0;                
+            var cntByDay = {}, numOfAtts = 0, curtDayIdx = 0, maxStartingLineup = 0;                
             cont.find("section .stat-target .ysf-rosterswapper tbody tr").each(function(){                                        
                 var bdrendCnt = 0, isFutureDay = false, position = "";                    
                 jQuery(this).find('td').each(function(idx){                        
                     if(idx == 0) {                            
-                        position = jQuery(this).text();                        
+                        position = jQuery(this).text();
+                        if(position != 'BN' && position != 'IL') {
+                            maxStartingLineup++;
+                        }                        
                     }                                                
                     if(removedIdxMap["k"+idx]) {                            
                         jQuery(this).remove();                            
@@ -90,8 +91,8 @@ javascript: (function(){
                     var kprefix = isFutureDay ? "f" : "k";                        
                     var cnt = cntByDay[kprefix+idx] || 0;                        
                     cnt = jQuery(this).text() == "" ? cnt : cnt+1;                        
-                    if(cnt > hdl.MAX_ACT_PLAYERS_PER_DAY) {                            
-                        cnt = hdl.MAX_ACT_PLAYERS_PER_DAY;                        
+                    if(cnt > maxStartingLineup) {                            
+                        cnt = maxStartingLineup;                 
                     }                        
                     cntByDay[kprefix+idx] = cnt;                                                                        
                     if(bdrendCnt == 3) {                            
