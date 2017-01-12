@@ -73,8 +73,15 @@ javascript: (function(){
 
 		shiftWeek: function(shiftWkNum) {
 			hdl.curtWeekNum += shiftWkNum;
+			var allstarBreakDayBuff = 0;
+			if(shiftWkNum < 0) {
+				allstarBreakDayBuff = hdl.curtWeekNum == 17 ? -7 : 0;
+			} else {
+				allstarBreakDayBuff = hdl.curtWeekNum == 18 ? 7 : 0;
+			}
+
 			var ndate = new Date(hdl.curtDate.getTime());
-			ndate.setDate(ndate.getDate() + (shiftWkNum * 7));
+			ndate.setDate(ndate.getDate() + (shiftWkNum * 7) + allstarBreakDayBuff);
 			hdl.updateCurrentDate(ndate);
 			hdl.updateSwitchTriggerLbl();
 
